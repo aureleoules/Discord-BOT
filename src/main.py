@@ -4,6 +4,7 @@ import random
 import asyncio
 import openai
 import os
+from urllib.request import urlopen
 
 intents = discord.Intents.default()
 intents.members = True
@@ -76,7 +77,10 @@ async def flood(ctx):
 
 @bot.command()
 async def xkcd(ctx):
-    await ctx.send("https://c.xkcd.com/random/comic/")
+    req = urlopen("https://c.xkcd.com/random/comic/")
+    html = str(req.read())
+    image_url = html.split('og:image" content="')[1].split('"')[0]
+    await ctx.send(image_url)
 
 @bot.command()
 async def poll(ctx, question, timeout=None):
