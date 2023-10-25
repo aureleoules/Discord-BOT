@@ -65,7 +65,12 @@ async def reset_message_count():
         await reset_message_count()
 
 @bot.command()
-async def flood(ctx):
+async def flood(ctx, _max_message_count: int, _timeout: int):
+    global max_message
+    global timeout
+
+    max_message = _max_message_count
+    timeout = _timeout
     global flood_active
     flood_active = not flood_active
     if flood_active:
